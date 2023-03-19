@@ -30,6 +30,12 @@ class Card extends React.Component{
                 counter:this.state.counter-1
             })
         }
+
+        chg_value = (e)=>{
+            this.setState({
+                val : e.target.value
+            })
+        }
     render(){
         return(
             <div style={{textAlign:"center"}}>
@@ -49,7 +55,9 @@ class Card extends React.Component{
             <br/>
             <br/>
             
-            <input type="text"  onChange={(e)=>console.log(e.target.value)} />
+            <input type="text"  onChange={(e)=>this.chg_value(e)} />
+
+            <h1>{this.state.val}</h1>
 
             </div>
 
