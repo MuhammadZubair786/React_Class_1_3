@@ -1,41 +1,49 @@
-import React,{Component} from "react";
-import { Link,useNavigate } from "react-router-dom";
+import React from "react"
+import { Link, useNavigate } from "react-router-dom"
 
-//high order function use for use hook in class based componnets
-const highOrderFunc = (Comp)=>{
-    const forwardRes = React.forwardRef((props,ref)=>{
-        const navigate = useNavigate()
-       return <Comp {...props} navigate={navigate} ref={ref} />
+let highorderfun = (Comp)=>{
+    let  forwar_1 = React.forwardRef((props,ref)=>{
+        let navigate = useNavigate()
+        return <Comp { ...props } navigate={navigate} />
     })
-    return forwardRes
+    return forwar_1
+
 }
 
-
-class Login extends Component{
-    go_home =()=>{ 
-        const {navigate} = this.props
-         navigate("/home/3",{
-            state: {
-                email :"new@GMAIL.COM",
-                password:123
-            }
-         })
+class Login extends React.Component{
+   
+    // let navigate =  useNavigate() //
+   
+    call_Data= ()=>{
+        console.log(this.props)
+        this.props.navigate("/home",
+        {
+            state : [
+                {
+                    name :"asad",
+                    email : "new@gmail.com"
+                },
+                {
+                    name :"asad123",
+                    email : "new123@gmail.com"
+                }
+               
+            ]
+        }
+        )
     }
 
     render(){
         return(
             <>
-             <h1>Login page</h1>
-             {/* <Link to="/home">
-                go to home page
-             </Link> */}
-             <button onClick={()=>this.go_home()}>
-                Click
-             </button>
+            <h1>Login</h1>
+            <Link to="/home">
+            go to home page
+            </Link>
+            <button onClick={()=>this.call_Data()}>Call data</button>
             </>
-           
         )
     }
 }
 
-export default highOrderFunc(Login)
+export default highorderfun(Login)

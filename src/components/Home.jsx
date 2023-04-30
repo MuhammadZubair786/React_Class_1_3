@@ -1,38 +1,28 @@
+import React from "react"
+import { useLocation, useNavigate } from "react-router-dom"
 
 
-import React,{Component} from "react";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
-
-
-//high order function use for use hook in class based componnets
-const highOrderFunc = (Comp)=>{
-    const forwardRes = React.forwardRef((props,ref)=>{
-        const location = useLocation()
-        const par = useParams()
-        const nav= useNavigate()
-       return <Comp {...props} nav={nav} par={par} location={location} ref={ref} />
+let highorderfun = (Comp)=>{
+    let  forwar_1 = React.forwardRef((props,ref)=>{
+        let location = useLocation()
+        let navigate = useNavigate()
+        return <Comp { ...props } location={location} navigate={navigate} />
     })
-    return forwardRes
+    return forwar_1
 }
 
-class Home extends Component{
+class Home extends React.Component{
 
-    getdata=()=>{
-        console.log(this.props.location.state)
-        console.log(this.props.par)
-        this.props.nav("/")
     
-    }
+    
     render(){
+        console.log(this.props.location.state)
         return(
             <>
-             <h1>Home page</h1>
-             <button onClick={()=>this.getdata()}>data </button>
-           
+            <h1>Home</h1>
             </>
-           
         )
     }
 }
 
-export default highOrderFunc(Home)
+export default  highorderfun(Home)
