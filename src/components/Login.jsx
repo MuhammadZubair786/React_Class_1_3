@@ -1,63 +1,41 @@
-import React, { useEffect, useState } from "react";
-import { ToastContainer, toast } from 'react-toastify';
-import { redirect, useNavigate } from "react-router-dom";
-import Home from "./Home";
-function Login(){
-   let [email,setemail ]=useState(" ")
-   let navigate = useNavigate()
+import React,{Component} from "react";
+import { Link,useNavigate } from "react-router-dom";
 
-  
-   const  submit_data =()=>{
-       
-        if(email== " "){
-            toast.error("enter data",{
-                position: "top-center",
-                theme: "colored",
-                autoClose: 1000,
-                progress: 0,
-                draggable: true,
-            })
-        }
-        else{
+//high order function use for use hook in class based componnets
+const highOrderFunc = (Comp)=>{
+    const forwardRes = React.forwardRef((props,ref)=>{
+        const navigate = useNavigate()
+       return <Comp {...props} navigate={navigate} ref={ref} />
+    })
+    return forwardRes
+}
 
-            localStorage.setItem("userreg",true)
-            toast.success("email is regsister",{
-                position: "top-center",
-                theme: "colored",
-                autoClose: 1000,
-                progress: 0,
-                draggable: true,
-            })
-            navigate("/home",{replace:true})
-            // console.log(useNavigate)
-        }
-      
+
+class Login extends Component{
+    go_home =()=>{ 
+        const {navigate} = this.props
+         navigate("/home/3",{
+            state: {
+                email :"new@GMAIL.COM",
+                password:123
+            }
+         })
     }
-  
+
+    render(){
         return(
             <>
-            <h1 style={{textAlign:"center"}}>Login Page</h1>
-
-            <div>
-
-            <input
-            value={email}
-            onChange={(e)=>setemail(e.target.value)}
-            style={{display:"block",margin:"auto"}} type="email" placeholder="enter email"/>
-
-            <input style={{display:"block",margin:"auto",marginTop:"10px"}} type="text" placeholder="enter password"/>
-            </div>
-            <br/>
-            <button onClick={()=>submit_data()} style={{display:"block",margin:"auto"}}>
-                Submit
-            </button>
-
-            <ToastContainer/>
-
-
+             <h1>Login page</h1>
+             {/* <Link to="/home">
+                go to home page
+             </Link> */}
+             <button onClick={()=>this.go_home()}>
+                Click
+             </button>
             </>
+           
         )
     }
+}
 
-
-export default Login 
+export default highOrderFunc(Login)
