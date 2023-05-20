@@ -1,14 +1,17 @@
-import React from "react"
+import React, { useState } from "react"
 import { Formik,Form, Field,ErrorMessage } from "formik"
 import * as Yup from 'yup';
 
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
 import {auth,db}  from "../config/Firebase";
 import {ref,push} from 'firebase/database'
 
 // import { Form } from "react-router-dom";
 
 function LoginForm(){
+
+    let [btn,setbtn] =useState() //state
+
     return(
         <>
         
@@ -25,10 +28,23 @@ function LoginForm(){
         onSubmit={async(value)=>{
             console.log(value)
             try{
+                if(btn=="signin"){
+                    console.log("login ")
 
+                    const user = await signInWithEmailAndPassword(auth,value.email,value.password)
+                    console.log(user.user.uid)
+              
+
+                }
+                else{
+                    console.log("create user")
+                
                 const user = await createUserWithEmailAndPassword(auth,value.email,value.password)
                 console.log(user.user.uid)
               
+                }
+
+             
 
                 // var obj ={
                 //     email:value.email,
@@ -63,7 +79,13 @@ function LoginForm(){
 
              
 
-                <button name="login" type="submit">Submit</button>
+                <button name="login" type="submit" 
+                onClick={()=>setbtn("signup")}
+                >Create user</button>
+                
+                <button name="login" type="submit" 
+                onClick={()=>setbtn("signin")}
+                >Login user</button>
 
             </Form>
 
