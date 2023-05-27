@@ -7,12 +7,11 @@ import {
   FormControlLabel,
 } from "@mui/material";
 import { createUserWithEmailAndPassword } from "firebase/auth";
-import { auth, storage } from "../../config/Firebase";
-import {getDownloadURL, ref as sRef, uploadBytes } from 'firebase/storage'
-
+import { auth, storage, db } from "../../config/Firebase";
+import { getDownloadURL, ref as sRef, uploadBytes } from "firebase/storage";
+import { set, ref } from "firebase/database";
 
 function Form3(props) {
-  
   let [gender, setgender] = useState("");
   let [skill, setskill] = useState("");
 
@@ -22,19 +21,19 @@ function Form3(props) {
 
   const handleupload = (e) => {
     console.log(e.target.files[0]);
-    const storageref = sRef(storage,`files/${e.target.files[0].name}`)
 
-    uploadBytes(storageref,e.target.files[0]).then((snapshot)=>{
-      getDownloadURL(snapshot.ref).then((url)=>{
-        console.log(url)
+    const storageref = sRef(storage, `imagesfiles/${e.target.files[0].name}`);
+
+    uploadBytes(storageref, e.target.files[0])
+      .then((snapshot) => {
+        getDownloadURL(snapshot.ref)
+          .then((url) => {
+            console.log(url);
+          })
+          .catch((e) => {});
       })
-      .catch((e)=>{
-
-      })
-    }).catch((e)=>{
-
-    })
- };
+      .catch((e) => {});
+  };
 
   const handlesubmit = async () => {
     if (skill == "" || gender == "") {
@@ -47,17 +46,26 @@ function Form3(props) {
       let g_cpg = localStorage.getItem("g_cgp");
 
       console.log(email, password, rollno, education, g_cpg);
-     
-      try{
-        let user = await createUserWithEmailAndPassword(auth,email,password)
-        console.log(user.user.uid)
-    }
-    catch(e){
-      alert(e)
 
-    }
-     
+      try {
+        let user = await createUserWithEmailAndPassword(auth, email, password);
+        console.log(user.user.uid);
 
+        let obj = {
+          email,
+          password,
+          rollno,
+          education,
+          uid: user.user.uid,
+        };
+
+        let dbref = ref(db, `user/${user.user.uid}`); //ref,path
+      await  set(dbref,obj);
+      alert("user add ")
+
+      } catch (e) {
+        alert(e);
+      }
     }
   };
 
