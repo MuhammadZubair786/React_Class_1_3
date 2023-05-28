@@ -50,7 +50,13 @@ function StepperForm() {
 
         {
         activestep1 == steps.length ? 
-          "submit"
+        <center>
+          <h1>  Submit your form </h1>
+          <button onClick={()=>setActiveStep(0)}>
+            Again reg 
+          </button>
+        </center>
+        
          :
          <>
           <Typography>{getStepContent(activestep1,handlechg,handleback)}</Typography>

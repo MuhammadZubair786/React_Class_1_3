@@ -41,9 +41,9 @@ function Form1(props) {
         (resp) => resp.json() // this returns a promise
       )
       .then((repos) => {
-        console.log(repos.response.ranks.batsmen.odis[0]
+        console.log(repos.response.ranks.batsmen
           );
-          setplayer(repos.response.ranks.batsmen.odis)
+          setplayer(repos.response.ranks.batsmen.t20s)
       })
       .catch((ex) => {
         console.error(ex);
@@ -54,13 +54,14 @@ function Form1(props) {
     if (email == "" || Password == "" || number == "") {
       alert("Enter Email , Password & number");
     } else {
-      let dbref = ref(db, "user");
+      let dbref = ref(db, "user");//ref
       get(dbref)
         .then((snapshot) => {
           console.log(snapshot.val());
+          if(snapshot.val()!=null){
           let data = Object.values(snapshot.val());
           console.log(data);
-          let chk = false;
+          let chk = false; //user 
           data.map((v, i) => {
             console.log(v.email);
             if (v.email == email) {
@@ -76,7 +77,15 @@ function Form1(props) {
             localStorage.setItem("rollno", number);
             props.handlechg();
           }
-        })
+     }
+     else {
+      localStorage.setItem("email", email);
+      localStorage.setItem("password", Password);
+      localStorage.setItem("rollno", number);
+      props.handlechg();
+    }
+     })
+      
         .catch((e) => {
           alert(e);
         });
@@ -131,7 +140,7 @@ function Form1(props) {
       <br />
       <br />
       {/* <button onClick={()=>submit()} >Next</button> */}
-      <Button variant="contained" onClick={() => sub1()} color="success">
+      <Button variant="contained" onClick={() => submit()} color="success">
         Success
       </Button>
     </div>

@@ -62,6 +62,7 @@ function Form3(props) {
         let dbref = ref(db, `user/${user.user.uid}`); //ref,path
       await  set(dbref,obj);
       alert("user add ")
+      props.handlechg()
 
       } catch (e) {
         alert(e);
