@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import { auth } from "../../config/Firebase";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { Button } from "@mui/material";
+import { ref, get } from "firebase/database";
+import { db } from "../../config/Firebase";
 function Form1(props) {
   let [email, setemail] = useState("");
   let [Password, setPassword] = useState("");
@@ -12,31 +14,56 @@ function Form1(props) {
     let password = localStorage.getItem("password");
     let rollno = localStorage.getItem("rollno");
 
-    setemail(useremail)
-    setPassword(password)
-    setnumber(rollno)
+    setemail(useremail);
+    setPassword(password);
+    setnumber(rollno);
   }, []);
-
-  // let [user,setuser]=useState({
-  //     email:"",
-  //     Password:"",
-  //     number:""
-  // })
-
-  // user.email ="ndjhd"
 
   const submit = async () => {
     if (email == "" || Password == "" || number == "") {
       alert("Enter Email , Password & number");
     } else {
-      localStorage.setItem("email", email);
-      localStorage.setItem("password", Password);
-      localStorage.setItem("rollno", number);
+      let dbrf = ref(db, "user");
+      let chk = false; //chk email
+      get(dbrf).then((snap) => {
+        console.log(snap.val());
+        if (snap.val() != null) {
+          let data = Object.values(snap.val());
+          // console.log(data)
+          data.map((v, i) => {
+            console.log(v.email);
+            if (email == v.email) {
+              chk = true;
+            }
+          });
+
+          if (chk == true) {
+            alert("already reg ");
+          } else {
+            localStorage.setItem("email", email);
+            localStorage.setItem("password", Password);
+            localStorage.setItem("rollno", number);
+            props.handlechg();
+          }
+        }
+        else{
+          localStorage.setItem("email", email);
+          localStorage.setItem("password", Password);
+          localStorage.setItem("rollno", number);
+          props.handlechg();
+        }
+      });
+
+      // let getdata = get(dbrf,(val)=>{
+      //   console.log(val)
+      // })
+
+      //db serarch
 
       // try{
       //     let user = await  createUserWithEmailAndPassword(auth,email,Password)
       //     console.log(user.user.uid)
-      props.handlechg();
+      // props.handlechg();
 
       // }
       // catch(err){

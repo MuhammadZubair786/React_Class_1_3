@@ -7,9 +7,9 @@ import {
   FormControlLabel,
 } from "@mui/material";
 import { createUserWithEmailAndPassword } from "firebase/auth";
-import { auth, storage } from "../../config/Firebase";
+import { auth, storage,db } from "../../config/Firebase";
 import {getDownloadURL, ref as sRef, uploadBytes } from 'firebase/storage'
-
+import {ref,set} from 'firebase/database'
 
 function Form3(props) {
   
@@ -20,6 +20,7 @@ function Form3(props) {
     setgender(e.target.value);
   };
 
+  //image upload 
   const handleupload = (e) => {
     console.log(e.target.files[0]);
     const storageref = sRef(storage,`files/${e.target.files[0].name}`)
@@ -37,6 +38,8 @@ function Form3(props) {
  };
 
   const handlesubmit = async () => {
+    console.log(skill)
+    console.log(gender)
     if (skill == "" || gender == "") {
       alert("enter value ");
     } else {
@@ -51,6 +54,31 @@ function Form3(props) {
       try{
         let user = await createUserWithEmailAndPassword(auth,email,password)
         console.log(user.user.uid)
+
+        const dbref = ref(db,`user/${user.user.uid}`)
+       
+        let obj ={
+          email,
+         password,
+        rollno,
+        education,
+        uid:user.user.uid
+        }
+
+        try{
+       await set(dbref, obj)
+       localStorage.clear()
+       props.handlechg()
+        }
+        catch(e){
+          alert(e)
+        }
+
+
+
+
+
+
     }
     catch(e){
       alert(e)

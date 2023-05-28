@@ -7,8 +7,8 @@ function Form2(props) {
   let [g_cgp, setg_cgp] = useState();
 
   const handleChange = (e) => {
-    seteducation(e.target.value);
-    setchg(e.target.value);
+    seteducation(e.target.value);//valuie
+    setchg(e.target.value);//condition
   };
 
   const nextform =()=>{
