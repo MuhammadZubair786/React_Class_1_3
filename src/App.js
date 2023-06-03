@@ -1,25 +1,30 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect } from "react";
+import axios from "axios";
+import Navigation from "./CONFIG/navigation";
 
 function App() {
+  // useEffect(() => {
+
+  //   let config = {
+  //     method: 'get',
+  //     maxBodyLength: Infinity,
+  //     url: 'https://rest.entitysport.com/v2/matches/?status=2&token=ec471071441bb2ac538a0ff901abd249',
+  //     headers: { }
+  //   };
+
+  //   axios.request(config)
+  //   .then((response) => {
+  //     console.log(JSON.stringify(response.data));
+  //   })
+  //   .catch((error) => {
+  //     console.log(error);
+  //   });
+  // }, []);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <Navigation />
+    </>
   );
 }
-
 export default App;
