@@ -1,25 +1,33 @@
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import { connect } from "react-redux";
+import {inc_count, dec_count } from "./config/Store/Action/increment";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+function App(props){
+  console.log(props)
+
+
+  return(
+    <>
+    <h1>Store value {props.count} </h1>
+    <button onClick={()=>props.inc()}>inc</button>
+    <button onClick={()=>props.dec_data()}>inc</button>
+
+    </>
+  )
 }
 
-export default App;
+const mapStateToProps=(state)=>({
+
+  count : state.count,
+  email:state.user
+})
+
+const mapdispatchtoprops=(dispatch)=>({
+  inc:()=> dispatch(inc_count()),
+  dec_data :()=>dispatch(dec_count())
+
+})
+
+
+// export default App
+export default connect( mapStateToProps,mapdispatchtoprops)(App)
