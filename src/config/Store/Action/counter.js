@@ -1,4 +1,4 @@
-const inc_count=(dispatch)=>{
+const inc_count=()=>{
     return((dispatch)=>{
         dispatch({
             type:"Inc"
@@ -6,7 +6,7 @@ const inc_count=(dispatch)=>{
     })
 }
 
-const dec_count=(dispatch)=>{
+const dec_count=()=>{
     return((dispatch)=>{
         dispatch({
             type:"dec"
