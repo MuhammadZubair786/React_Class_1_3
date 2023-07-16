@@ -1,0 +1,28 @@
+Redux=>state mangement
+app load =>api data save state
+create store AND Manage
+
+store=>index.js=>create store=>apply middleware=>thunk
+Reducer=>initial state,state change queryx,
+Action=>adduser,deleteuser,index.jsx=>action type =>reducers reponse
+                                 
+App connect with store
+index.js=>Provider =>prop=>store =>Store
+App.js = > connect 
+export default connect(valueget,valuechange)(functionname)
+
+home=>user=>login
+login=>localstorage
+php=>seesion 
+
+home page 
+user=>add
+
+
+function abc(a,b,...c)
+
+call(1,2,3,45,6,7,8,)
+
+action=>type,data
+
+
