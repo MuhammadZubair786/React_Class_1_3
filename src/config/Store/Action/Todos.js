@@ -17,4 +17,23 @@ const addLocalTodostoState = ()=>{
     })
 } 
 
-export {addTodo,addLocalTodostoState}
+const updateStatus =(ind)=>{
+    return((dispatch)=>{
+        dispatch({
+            type:"update_status",
+            index:ind
+        })
+    })
+}
+
+const updateTodo = (data)=>{
+    return((dispatch)=>{
+        dispatch({
+            type:"update_todo",
+            data:data
+        })
+    })
+
+}
+
+export {addTodo,addLocalTodostoState,updateStatus,updateTodo}
